@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// 2.9 partly done with components formd
+// 2.9 DONE, this is the one w/o a button 2.11 will attempt to implement a button
 import Persons from './components/persons'
 import Form from './components/form'
 const App = () => {
@@ -11,12 +11,18 @@ const App = () => {
   ]) // we set persons with an intial array containing arto hellas
   const [ newName, setNewName ] = useState('') // newName is empty
   const [ newPhone, setNewPhone] = useState('')
-  const handleOnChange = (event) => { // our event handler whenever 
+  const [ newSearch, setNewSearch] = useState('')
+  const [ filterBool, setFilterBool] = useState(true)
+  const handleNameChange = (event) => { // our event handler whenever 
     setNewName(event.target.value)
   }
   const handlePhoneChange = (event) => {
     //console.log(event.target.value) // this is to check temporailty
     setNewPhone(event.target.value)
+  } 
+  const handleSearchChange = (event) => {
+    console.log(event.target.value)
+    setNewSearch(event.target.value)
   }
   const addName = (event) => {
     event.preventDefault() // avoids the default 
@@ -42,23 +48,21 @@ const App = () => {
       setNewPhone('')
     }
     }
-  
+  //const myFilter = filterBool ? persons : persons.filter(person => person.name.includes(newSearch))
+  const myFilter = persons.filter(person => person.name.includes(newSearch))
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
+      <form> 
         <div>
-          input shown with <input />
+          input shown with <input value ={newSearch} onChange = {handleSearchChange}/>
         </div>
-        <button>
-          search
-        </button>
       </form>
       <h2>add a new</h2>
-      <Form submit = {addName} newName = {newName} newPhone = {newPhone} addNewName = {handleOnChange} addNewPhone ={handlePhoneChange} />
+      <Form submit = {addName} newName = {newName} newPhone = {newPhone} nameChange = {handleNameChange} phoneChange ={handlePhoneChange} />
       <h2>Numbers</h2>
       <ul>
-        <Persons persons = {persons}/>
+        <Persons persons = {myFilter}/>
       </ul>
     </div>
   )
