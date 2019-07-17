@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
-// 2.7
+// 2.8
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { 
+      name: 'Arto Hellas',
+      phone: '040-1234567' // we should have strings always 
+    }
   ]) // we set persons with an intial array containing arto hellas
   const [ newName, setNewName ] = useState('') // newName is empty
+  const [ newPhone, setNewPhone] = useState('')
   const handleOnChange = (event) => { // our event handler whenever 
-    //we change the typingbox  area
-    //console.log(event.target.value)
     setNewName(event.target.value)
+  }
+  const handlePhoneChange = (event) => {
+    //console.log(event.target.value) // this is to check temporailty
+    setNewPhone(event.target.value)
   }
   const addName = (event) => {
     event.preventDefault() // avoids the default 
@@ -24,12 +30,14 @@ const App = () => {
     }
     else {
       const personObject = {
-        name: newName
+        name: newName,
+        phone: newPhone
       }
       const copy = persons // make a copy
       copy.push(personObject) // push new name to the copy
       setPersons(copy) // reassign copy to be the new persons array 
       setNewName('') // reset to empty for the next new name
+      setNewPhone('')
     }
     }
     
@@ -41,11 +49,14 @@ const App = () => {
           name: <input value ={newName} onChange = {handleOnChange}/>
         </div>
         <div>
+          number: <input value = {newPhone} onChange = {handlePhoneChange} />
+        </div>
+        <div>
           <button type="submit" >add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      <ul>{persons.map(person => <li key = {person.name}>{person.name}</li>)}</ul>
+      <ul>{persons.map(person => <li key = {person.name}>{person.name + " " + person.phone}</li>)}</ul>
     </div>
   )
 }
