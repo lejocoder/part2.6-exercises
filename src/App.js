@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-// 2.8
+// 2.9 partly done with components formd
+import Persons from './components/persons'
+import Form from './components/form'
 const App = () => {
   const [ persons, setPersons] = useState([
     { 
@@ -40,23 +42,24 @@ const App = () => {
       setNewPhone('')
     }
     }
-    
+  
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit = {addName}>
+      <form>
         <div>
-          name: <input value ={newName} onChange = {handleOnChange}/>
+          input shown with <input />
         </div>
-        <div>
-          number: <input value = {newPhone} onChange = {handlePhoneChange} />
-        </div>
-        <div>
-          <button type="submit" >add</button>
-        </div>
+        <button>
+          search
+        </button>
       </form>
+      <h2>add a new</h2>
+      <Form submit = {addName} newName = {newName} newPhone = {newPhone} addNewName = {handleOnChange} addNewPhone ={handlePhoneChange} />
       <h2>Numbers</h2>
-      <ul>{persons.map(person => <li key = {person.name}>{person.name + " " + person.phone}</li>)}</ul>
+      <ul>
+        <Persons persons = {persons}/>
+      </ul>
     </div>
   )
 }
